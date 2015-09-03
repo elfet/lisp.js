@@ -1,29 +1,33 @@
 import { stack } from './stack';
 
+function lookUp(level, name) {
+  if (stack[level].hasOwnProperty(name)) {
+    return stack[level][name];
+  } else if (level > 0) {
+    return lookUp(level - 1, name)
+  } else {
+    return undefined;
+  }
+}
+
 let index = 0;
 
-export default class Atom {
+export class Atomic {
   constructor(name) {
     this.name = name || 'atom#' + index++;
   }
 
   value() {
-    return this.lookUp(stack.length - 1, this.name);
-  }
-
-  lookUp(level, name) {
-    if (stack[level][name]) {
-      return stack[level][name];
-    } else if (level > 0) {
-      return this.lookUp(level - 1, name)
-    } else {
-      return undefined;
-    }
+    return lookUp(stack.length - 1, this.name);
   }
 }
 
-export let x = new Atom('x');
-export let y = new Atom('y');
-export let i = new Atom('i');
-export let foo = new Atom('foo');
-export let bar = new Atom('bar');
+export default function atom(name = null) {
+  return new Atomic(name);
+}
+
+// Common atoms:
+export let x = atom('x');
+export let y = atom('y');
+export let i = atom('i');
+export let j = atom('j');

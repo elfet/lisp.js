@@ -1,4 +1,4 @@
-import Atom from './atoms';
+import { Atomic } from './atoms';
 import { OPERATORS } from './operators';
 
 export default function evaluate(expr) {
@@ -7,8 +7,8 @@ export default function evaluate(expr) {
   if (OPERATORS.indexOf(head) != -1) {
     // Operators independently decide when to evaluate.
     return head.apply(null, tail);
-  } else if (typeof head == "function" || head instanceof Atom) {
-    if (head instanceof Atom) {
+  } else if (typeof head == "function" || head instanceof Atomic) {
+    if (head instanceof Atomic) {
       // Atom may contains function to apply.
       head = head.value();
     }
@@ -16,6 +16,6 @@ export default function evaluate(expr) {
     return head.apply(null, tail.map(evaluate));
   } else {
     // Return rest values or atom values.
-    return expr instanceof Atom ? expr.value() : expr;
+    return expr instanceof Atomic ? expr.value() : expr;
   }
 }
