@@ -18,6 +18,10 @@ export function end(list) {
   return list.length > 0 ? list[list.length - 1] : undefined;
 }
 
+export function concat(a, b) {
+  return a.concat(b);
+}
+
 /*
  * Math
  */
@@ -72,4 +76,19 @@ export function not(x) {
 
 export function log(...args) {
   return console.log(...args);
+}
+
+export function range(start, end, step = 1) {
+  var range = [];
+
+  if (end < start) {
+    step = -step;
+  }
+
+  while (step > 0 ? end >= start : end <= start) {
+    range.push(start);
+    start += step;
+  }
+
+  return range;
 }

@@ -1,8 +1,8 @@
 export let stack = [{}];
 
-export function pushStack(definition, args) {
+export function pushStack(params, args) {
   let map = {};
-  definition.forEach((arg, i) => map[arg.name] = args[i]);
+  params.forEach((arg, i) => map[arg.name] = args[i]);
   stack.push(map);
 }
 
